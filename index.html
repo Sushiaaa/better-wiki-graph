@@ -5,12 +5,18 @@
     <title>Quick Sigma.js Example</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@10.0.0/dist/index.min.js"></script>
   </head>
   <body style="background: lightgrey">
     <div id="container" style="width: 800px; height: 600px; background: white"></div>
     <script>
       // Create a graphology graph
       const graph = new graphology.Graph();
+      for(let i = 0; i<100; i++){
+        node_name = uuid.v4();
+        graph.addNode(node_name, {labe: node_name})
+      }
+      
       graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
       graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
       graph.addEdge("1", "2", { size: 5, color: "purple" });
