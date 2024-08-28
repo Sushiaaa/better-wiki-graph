@@ -14,7 +14,7 @@
       const graph = new graphology.Graph();
       for(let i = 0; i<100; i++){
         node_name = uuid.v4();
-        graph.addNode(node_name, {labe: node_name})
+        graph.addNode(node_name, {labe: node_name, x: 0, y: 0, size: 10, color: "blue"})
       }
       
       graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
