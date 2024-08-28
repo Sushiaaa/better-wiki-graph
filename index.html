@@ -11,9 +11,6 @@
     <script>
       // Create a graphology graph
       const graph = new graphology.Graph();
-      for(let i = 0; i<100; i++){
-        graph.addNode(i.toString(), {label: i.toString(), x: i, y: i, size: 10, color: "blue"})
-      }
       
       graph.addNode("1", { label: "Node 1", x: 0, y: 0, size: 10, color: "blue" });
       graph.addNode("2", { label: "Node 2", x: 1, y: 1, size: 20, color: "red" });
