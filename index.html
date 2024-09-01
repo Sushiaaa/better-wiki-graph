@@ -66,17 +66,25 @@
           color: white;
           cursor:pointer;
         }
+        #toggle_mobile{
+          height: 20px
+        }
     </style>
 </head>
 <body>
+  
     <div id="mynetwork">
         
     </div>
-
+    <div id="option_menu" style="height: 5px;">
+      <button id="toggle_mobile" onclick="is_mobile = !is_mobile"></button>
+    </div>
 </body>
 <script type="text/javascript">
 const description_regex = /<p id="mwCw">.*?<\/p>/i;
 const plain_text_regex = /<[^>]+>/g;
+
+var is_mobile = false
 
 var nodes = new vis.DataSet([
 ]);
@@ -109,6 +117,10 @@ var options = {
       face: "sans-serif"
     },
     shape: "box"
+  },
+  interaction: {
+    hideEdgesOnDrag: false,
+    hideEdgesOnZoom: false
   }
 };
 
@@ -174,6 +186,11 @@ network.on("zoom", function (params) {
 });
 
 network.on("selectNode", async function (params) {
+
+options.interaction.hideEdgesOnDrag = false
+options.interaction.hideEdgesOnZoom = false
+network.setOptions(options);
+
   console.log(params.nodes[0])
     if(params.nodes[0]){
       var fetch_response =await fetch('https://de.wikipedia.org/api/rest_v1/page/summary/'+params.nodes[0])
@@ -207,6 +224,37 @@ network.on("deselectEdge", function (params) {
 });
 network.on("hoverEdge", function (params) {
   console.log("hoverEdge Event:", params);
+});
+network.on("hoverNode", async function (params) {
+  if(is_mobile){
+    options.interaction.hideEdgesOnDrag = false
+options.interaction.hideEdgesOnZoom = false
+network.setOptions(options);
+
+  console.log(params.nodes[0])
+    if(params.nodes[0]){
+      var fetch_response =await fetch('https://de.wikipedia.org/api/rest_v1/page/summary/'+params.nodes[0])
+      .then(response => {return response.json()});
+      console.log(fetch_response.extract)
+      HEADER_CONTAINER.innerText = fetch_response.title;
+      SUMMARY_CONTAINER.innerText = fetch_response.extract;
+      if(fetch_response.thumbnail){
+        IMAGE_CONTAINER.src=fetch_response.thumbnail.source;
+      }else{
+        IMAGE_CONTAINER.src = "";
+      }
+            wiki_info.style.visibility = "visible";
+            attached_node = params.nodes[0];
+            const node_pos =network.getPosition(attached_node)
+            const viewport_pos = network.getViewPosition()
+            HEADER_CONTAINER.href="https://de.wikipedia.org/wiki/"+params.nodes[0]
+            console.log(params.nodes[0])
+            wiki_info.style.left = ((node_pos.x-viewport_pos.x+position_offest_x)*network.getScale()+900)
+            wiki_info.style.top = ((node_pos.y-viewport_pos.y+position_offest_y)*network.getScale()+500)
+    }
+  }
+
+
 });
 WIKI_INPUT_ELEMENT.addEventListener("input", async function(params){
   const INPUT = WIKI_INPUT_ELEMENT.value;
