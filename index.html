@@ -226,7 +226,7 @@ network.on("hoverEdge", function (params) {
   console.log("hoverEdge Event:", params);
 });
 network.on("hoverNode", async function (params) {
-  if(is_mobile){
+
     options.interaction.hideEdgesOnDrag = false
 options.interaction.hideEdgesOnZoom = false
 network.setOptions(options);
@@ -252,7 +252,6 @@ network.setOptions(options);
             wiki_info.style.left = ((node_pos.x-viewport_pos.x+position_offest_x)*network.getScale()+900)
             wiki_info.style.top = ((node_pos.y-viewport_pos.y+position_offest_y)*network.getScale()+500)
     }
-  }
 
 
 });
