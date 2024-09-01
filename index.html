@@ -235,8 +235,8 @@ SEARCH_RESULT_LIST.addEventListener("click", async function(params){
   var matches = new Set();
   while((match = PATTERN.exec(response_text)) !== null){
     new_match = match[1].replace(/\?.*/g)
-    if(new_match.includes("#") == false && new_match.includes(":") == false){
-      matches.add(match[1].replace(/\?.*/g));
+    if(new_match.includes("#") == false && new_match.includes(":") == false && new_match.includes("action=edit") == false && new_match.includes("undefined") == false){
+      matches.add(new_match);
     }
     
   }
