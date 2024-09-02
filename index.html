@@ -272,12 +272,11 @@ console.log(network.nodes);
 network.setData({nodes:node_dataset,edges:edge_dataset});
 
 });
-WIKI_INPUT_ELEMENT.addEventListener("focus", function ()=> {
-    SEARCH_RESULT_LIST.style.visibility = "visible"
-})
-WIKI_INPUT_ELEMENT.addEventListener("blur" function () => {
-    SEARCH_RESULT_LIST.style.visibility = "hidden"
-})
+
+WIKI_INPUT_ELEMENT.addEventListener("blur", () => {
+    SEARCH_RESULT_LIST.innerHTML = "";
+});
+
 </script>
 
 </html>
