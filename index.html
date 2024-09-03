@@ -96,8 +96,7 @@ const description_regex = /<p id="mwCw">.*?<\/p>/i;
 const plain_text_regex = /<[^>]+>/g;
 
 var is_mobile = false
-var language = "en"
-
+var language = (navigator.language || navigator.userLanguage).replace(/-.*/, "")
 var nodes = new vis.DataSet([
 ]);
 
@@ -165,8 +164,8 @@ var wiki_input = document.createElement("div");
 wiki_input.style = "background-color: white; max-height: 400px; border: 0px solid #a2a9b1; display:flex; flex-direction: column; top:0; left: 83.8%"
 wiki_input.innerHTML = `
             <div style= "display:flex">
-            <button id="language_selector_button" style= "width:50; background-color: transparent; border: 1px solid; padding:0; color: #a2a9b1; font-size: larger">en</button>
-            <input id="wiki_input" placeholder="Search Wikipedia" style="border:1px solid; border-left: 1px solid">
+            <button id="language_selector_button" style= "width:50; background-color: transparent; border: 1px solid; padding:0; color: #a2a9b1; font-size: larger">`+language+`</button>
+            <input id="wiki_input" placeholder="`+languages[language]+`"" style="border:1px solid; border-left: 1px solid">
             </div>
             <div style>
               <ul id="language_list" style="margin:0; list-style-type: none; overflow:auto; overflow-x: hidden; padding-left:0px; max-height:200px; font-family: sans-serif; font-size: larger; color: #a2a9b1; display:block; display:none; width: 49px; border: 1px solid; border-top: 0px">
@@ -324,6 +323,7 @@ WIKI_INPUT_ELEMENT.addEventListener('blur', () => {
 });
 LANGUAGE_LIST.addEventListener("click", (event) => {
     language = event.target.textContent;
+  
     LANGUAGE_SELECTOR_BUTTON.innerText = language;
     WIKI_INPUT_ELEMENT.placeholder = languages[language];
     network.setData({});
@@ -335,16 +335,12 @@ LANGUAGE_SELECTOR_BUTTON.addEventListener("click", () => {
   LANGUAGE_LIST.style.display = "block";
 });
 LANGUAGE_SELECTOR_BUTTON.addEventListener("blur", () => {
-  WIKI_INPUT_ELEMENT.style.backgroundColor = "black";
   setTimeout(() => {
       LANGUAGE_LIST.style.display = "none";
     }, 1);
 });
-LANGUAGE_SELECTOR_BUTTON.addEventListener("touchend", () => {
-  WIKI_INPUT_ELEMENT.style.backgroundColor = "black";
-  setTimeout(() => {
-      LANGUAGE_LIST.style.display = "none";
-    }, 1);
+window.addEventListener("resize", () =>{
+  wiki_input_wrapper.style.left = (network_container.getBoundingClientRect().width-305).toString();
 });
 
 </script>
