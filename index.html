@@ -282,7 +282,7 @@ WIKI_INPUT_ELEMENT.addEventListener("input", async function(params){
   }
   
 });
-SEARCH_RESULT_LIST.addEventListener("click", async function(params){
+async function get_sites(params){
   const PATTERN = /<a[^>]*\srel="mw:WikiLink"[^>]*\shref="([^"]+)"[^>]*>/g;
   const CLICKED_ARTICLE = params.target.innerHTML.replace(" ","_");
   var response_text = await fetch('https://'+language+'.wikipedia.org/api/rest_v1/page/html/'+CLICKED_ARTICLE)
@@ -309,6 +309,9 @@ SEARCH_RESULT_LIST.addEventListener("click", async function(params){
 
 network.setData({nodes:node_dataset,edges:edge_dataset});
 
+}
+SEARCH_RESULT_LIST.addEventListener("click", async function(params){
+  get_sites(params);
 });
 WIKI_INPUT_ELEMENT.addEventListener('focus', () => {
     SEARCH_RESULT_LIST.style.display = 'block';
@@ -323,7 +326,7 @@ LANGUAGE_LIST.addEventListener("click", (event) => {
     language = event.target.textContent;
     LANGUAGE_SELECTOR_BUTTON.innerText = language;
     WIKI_INPUT_ELEMENT.placeholder = languages[language];
-    
+    network.setData({});
 });
 SEARCH_RESULT_LIST.addEventListener('mousedown', (event) => {
     event.preventDefault();
@@ -334,7 +337,7 @@ LANGUAGE_SELECTOR_BUTTON.addEventListener("click", () => {
 LANGUAGE_SELECTOR_BUTTON.addEventListener("blur", () => {
   setTimeout(() => {
       LANGUAGE_LIST.style.display = "none";
-    }, 100);
+    }, 1);
 })
 
 </script>
