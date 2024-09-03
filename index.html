@@ -335,6 +335,7 @@ LANGUAGE_SELECTOR_BUTTON.addEventListener("click", () => {
   LANGUAGE_LIST.style.display = "block";
 });
 LANGUAGE_SELECTOR_BUTTON.addEventListener("blur", () => {
+  WIKI_INPUT_ELEMENT.style.backgroundColor = "black";
   setTimeout(() => {
       LANGUAGE_LIST.style.display = "none";
     }, 1);
