@@ -339,7 +339,13 @@ LANGUAGE_SELECTOR_BUTTON.addEventListener("blur", () => {
   setTimeout(() => {
       LANGUAGE_LIST.style.display = "none";
     }, 1);
-})
+});
+LANGUAGE_SELECTOR_BUTTON.addEventListener("touchend", () => {
+  WIKI_INPUT_ELEMENT.style.backgroundColor = "black";
+  setTimeout(() => {
+      LANGUAGE_LIST.style.display = "none";
+    }, 1);
+});
 
 </script>
 
